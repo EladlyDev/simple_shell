@@ -89,3 +89,27 @@ node_t *new_node(node_t **head, char *value)
 
 	return (new_node);
 }
+
+/**
+ * free_list - frees a node_s list.
+ * @head: the list_t's head.
+ **/
+void free_list(node_t *head)
+{
+	node_t *temp;
+
+	if (head == NULL)
+	{
+		free(head);
+		return;
+	}
+	while (head->next != NULL)
+	{
+		temp = head;
+		head = head->next;
+		free(temp->value);
+		free(temp);
+	}
+	free(head->value);
+	free(head);
+}

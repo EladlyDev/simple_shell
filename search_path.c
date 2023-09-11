@@ -28,8 +28,8 @@ int search_path(char **pathname)
 		path = _strdup(head->value);
 
 		if (path[_strlen(path) - 1] != '/')
-			strcat(path, "/");
-		strcat(path, *pathname);
+			_strcat(path, "/");
+		_strcat(path, *pathname);
 
 		if (stat(path, &buff) == 0)
 		{
@@ -40,6 +40,7 @@ int search_path(char **pathname)
 		head = head->next;
 	}
 
+	free_list(head);
 	free(path);
 	free(*pathname);
 	return (-1);
