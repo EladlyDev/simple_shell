@@ -33,23 +33,19 @@ char *_getenv(char *var)
  **/
 node_t *link_path(void)
 {
-	char *path, *piece, *pathdup;
+	char *path, *piece;
 	node_t *head = NULL;
 
 	path = getenv("PATH");
 	if (!path)
 		return (NULL);
 
-	pathdup = _strdup(path);
-	if (!pathdup)
-		return (NULL);
-
-	piece = strtok(pathdup, ":");
-	while (piece != NULL)
+	piece = _strtok(path, ":");
+	while (piece)
 	{
 		if (new_node(&head, piece) == NULL)
 			return (NULL);
-		piece = strtok(NULL, ":");
+		piece = _strtok(NULL, ":");
 	}
 
 	return (head);

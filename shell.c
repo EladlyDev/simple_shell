@@ -9,7 +9,7 @@
  **/
 int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
-	char **av, *buff = NULL, *buffdup, *path, *piece;
+	char **av, *buff = NULL, *path, *piece;
 	int i, in_len;
 	size_t n;
 
@@ -21,20 +21,19 @@ int main(int __attribute__((unused)) argc, char **argv, char **env)
 		return (0);
 	}
 /* get the length of the input */
-	buffdup = _strdup(buff);
-	piece = strtok(buffdup, " \n");
+	piece = _strtok(buff, " \n");
 	in_len = 0;
 	while (piece)
 	{   in_len++;
-		piece = strtok(NULL, " \n");
+		piece = _strtok(NULL, " \n");
 	}
 /* fill av */
 	av = malloc(sizeof(av) * (in_len + 1));
 	if (in_len > 0)
-	{   piece = strtok(buff, " \n");
+	{   piece = _strtok(buff, " \n");
 		for (i = 0; piece; i++)
 		{   av[i] = piece;
-			piece = strtok(NULL, " \n");
+			piece = _strtok(NULL, " \n");
 		}
 		av[i] = NULL;
 		path = av[0];
