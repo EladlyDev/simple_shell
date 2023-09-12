@@ -28,7 +28,7 @@ typedef struct node_s
 /* Prototypes */
 int execute(char *pathname, char **av, char **env);
 int search_path(char **pathname);
-void write_number(int num);
+
 /* 0-string.c */
 int _strlen(char *s);
 char *_strdup(char *str);
@@ -39,10 +39,14 @@ char *_strcat(char *dest, char *src);
 /* 1-string.c */
 char *_strtok(char *str, char *delim);
 
-/* utils.c */
+/* 0-utils.c */
+char *itos(unsigned long n);
 node_t *link_path(void);
 node_t *new_node(node_t **head, char *value);
 char *_getenv(char *var);
 void free_list(node_t *head);
+
+/* 1-utils.c */
+void error(char *mav, int count, char *cav, char *src);
 
 #endif /* _SHELL_H */

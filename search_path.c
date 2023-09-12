@@ -22,7 +22,6 @@ int search_path(char **pathname)
 
 	/* search in PATH */
 	head = link_path();
-
 	while (head != NULL)
 	{
 		path = _strdup(head->value);

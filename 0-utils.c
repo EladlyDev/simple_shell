@@ -1,21 +1,39 @@
 #include "shell.h"
 
 /**
- * write_number - function writes the line number
- * @num: number to be converted
- */
+ * itos - converts a number into a string
+ * @n: number to be converted
+ *
+ * Return: a pointer to the string
+ **/
 
-void write_number(int num)
+char *itos(unsigned long n)
 {
-    char digit;
-    if (num < 0) {
-        write(STDOUT_FILENO, "-", 1);
-        num = -num;
-    }
-    if (num / 10)
-        write_number(num / 10);
-    digit = '0' + num % 10;
-    write(STDOUT_FILENO, &digit, 1);
+	int dig_count = 0, idx;
+	long num = n;
+	char *str;
+
+	/* Count the digits of n*/
+	do {
+		dig_count++;
+		num /= 10;
+	} while (num != 0);
+
+	/* Allocate space for all digits + null byte*/
+	str = malloc(dig_count + 1);
+	if (!str)
+		return (NULL);
+	/*Fill the string strating from the last character*/
+	idx = dig_count - 1;
+	do {
+		str[idx] = '0' + (n % 10);
+		n /= 10;
+		idx--;
+	} while (n != 0);
+	str[dig_count] = '\0';
+
+	return (str);
+
 }
 /**
  * _getenv - gets the environment variable's value

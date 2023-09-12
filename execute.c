@@ -12,23 +12,20 @@
 int execute(char *pathname, char **av, char **env)
 {
 	int pid;
+	char *path;
 
 	if (!*pathname)
 		return (-1);
 
-	if (search_path(&pathname) == -1)
+	path = _strdup(pathname);
+	if (search_path(&path) == -1)
 		return (-1);
 
 	pid = fork();
 	if (pid == 0)
-	{
-		if (execve(pathname, av, env) == -1)
-		{
-			perror("");
-			return (-1);
-		}
-	}
+		execve(path, av, env);
 
 	wait(NULL);
+	free(path);
 	return (pid);
 }
