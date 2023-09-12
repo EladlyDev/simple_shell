@@ -9,7 +9,7 @@
  **/
 int main(int __attribute__((unused)) argc, char **argv, char **env)
 {
-	char **av, *buff, *buffdup, *path, *piece;
+	char **av, *buff = NULL, *buffdup, *path, *piece;
 	int i, in_len;
 	size_t n;
 
