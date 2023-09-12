@@ -28,7 +28,7 @@ typedef struct node_s
 /* Prototypes */
 int execute(char *pathname, char **av, char **env);
 int search_path(char **pathname);
-
+void write_number(int num);
 /* 0-string.c */
 int _strlen(char *s);
 char *_strdup(char *str);
