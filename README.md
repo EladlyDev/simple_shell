@@ -13,7 +13,7 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 - [x] Fix: the passed arguments: $ echo arg1 arg2
 - [x] Add: implement strcat();
 - [x] Add: create a function to free the linked list.
-- [-] Fix: _getenv();
+- [x] Fix: _getenv();
 - [-] Add: mimic the errors in sh
 - [ ] Implement the exit built-in, that exits the shell
 - [ ] Implement the env built-in, that prints the current environment

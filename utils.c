@@ -8,7 +8,7 @@
  **/
 char *_getenv(char *var)
 {
-	char *piece, *current;
+	char *piece;
 	int i;
 
 	if (!*var)
@@ -16,11 +16,13 @@ char *_getenv(char *var)
 
 	for (i = 0; environ[i]; i++)
 	{
-		current = environ[i];
-		piece = strtok(environ[i], "=");
-		printf("piece: %s, environ[%d]: %s\n", piece, i, current);
-		if (piece == var)
-			break;
+		piece = _strtok(environ[i], "=");
+		while (piece)
+		{
+			if (_strcmp(piece, var) == 0)
+				return (environ[i]);
+			piece = _strtok(NULL, "=");
+		}
 	}
 
 	return (environ[i]);
@@ -36,7 +38,7 @@ node_t *link_path(void)
 	char *path, *piece;
 	node_t *head = NULL;
 
-	path = getenv("PATH");
+	path = _getenv("PATH");
 	if (!path)
 		return (NULL);
 
