@@ -1,6 +1,23 @@
 #include "shell.h"
 
 /**
+ * write_number - function writes the line number
+ * @num: number to be converted
+ */
+
+void write_number(int num)
+{
+    char digit;
+    if (num < 0) {
+        write(STDOUT_FILENO, "-", 1);
+        num = -num;
+    }
+    if (num / 10)
+        write_number(num / 10);
+    digit = '0' + num % 10;
+    write(STDOUT_FILENO, &digit, 1);
+}
+/**
  * _getenv - gets the environment variable's value
  * @var: the required variable
  *
