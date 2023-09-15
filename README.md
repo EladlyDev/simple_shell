@@ -7,6 +7,15 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 
 ## TODO:
 
+- [x] Refactore _strtok, and solve its memory leaks
+- [ ] Refactore the rest of the project with the new _strtok
+  - [x] shell.c
+  - [x] search_path
+  - [x] execute
+  - [x] 0-utils
+  - [x] 0-string
+  - [ ] No Memory Leaks
+  - [ ] Everything works well
 - [ ] Fix: non-existed command longer than 2 char.
 - ~~[ ] Fix: ctl+c prompt again, and exit in case ./shell | "ls"~~
 - [x] Fix: ctl+d exits, and fix "getline: Success"

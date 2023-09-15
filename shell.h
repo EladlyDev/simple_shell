@@ -37,7 +37,8 @@ char *_strcpy(char *dest, char *src);
 char *_strcat(char *dest, char *src);
 
 /* 1-string.c */
-char *_strtok(char *str, char *delim);
+char **_strtok(char *str, char *delim, char **arr);
+size_t noftokens(char *str, char *delim);
 
 /* 0-utils.c */
 char *itos(unsigned long n);

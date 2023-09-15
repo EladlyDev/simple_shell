@@ -43,21 +43,32 @@ char *itos(unsigned long n)
  **/
 char *_getenv(char *var)
 {
-	char *piece;
-	int i;
+	char **arr = NULL, *currentenv;
+	int i, j;
 
 	if (!*var)
 		return (NULL);
-
-	for (i = 0; environ[i]; i++)
+	for (i = 0, j = 0; environ[i]; i++)
 	{
-		piece = _strtok(environ[i], "=");
-		while (piece)
+		currentenv = _strdup(environ[i]);
+		arr = _strtok(currentenv, "=", arr);
+		if (!arr)
 		{
-			if (_strcmp(piece, var) == 0)
-				return (environ[i]);
-			piece = _strtok(NULL, "=");
+			free(currentenv);
+			return (NULL);
 		}
+		while (arr[j])
+		{
+			if (_strcmp(arr[j], var) == 0)
+			{
+				free(arr);
+				return (environ[i]);
+			}
+			j++;
+		}
+		j = 0;
+		free(arr);
+		arr = NULL;
 	}
 
 	return (environ[i]);
@@ -70,21 +81,32 @@ char *_getenv(char *var)
  **/
 node_t *link_path(void)
 {
-	char *path, *piece;
+	char **arr = NULL, *pathdup;
+	static char *path;
 	node_t *head = NULL;
+	int i = 0;
 
-	path = _getenv("PATH");
+	if (!path)
+		path = _getenv("PATH");
+
 	if (!path)
 		return (NULL);
-
-	piece = _strtok(path, ":");
-	while (piece)
+	pathdup = _strdup(path);
+	arr = _strtok(pathdup, ":=", arr);
+	if (!arr)
+		return (NULL);
+	while (arr[i])
 	{
-		if (new_node(&head, piece) == NULL)
+		if (new_node(&head, arr[i]) == NULL)
+		{
+			free(pathdup);
 			return (NULL);
-		piece = _strtok(NULL, ":");
+		}
+		i++;
 	}
 
+	free(arr);
+	free(pathdup);
 	return (head);
 }
 
@@ -102,7 +124,7 @@ node_t *new_node(node_t **head, char *value)
 	new_node = malloc(sizeof(node_t));
 	if (!new_node)
 		return (NULL);
-	new_node->value = value;
+	new_node->value = _strdup(value);
 
 	if (start == NULL)
 	{

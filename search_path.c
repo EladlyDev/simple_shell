@@ -9,7 +9,7 @@
  **/
 int search_path(char **pathname)
 {
-	node_t *head = NULL;
+	node_t *head = NULL, *tmp;
 	char *path;
 	struct stat buff;
 
@@ -22,9 +22,10 @@ int search_path(char **pathname)
 
 	/* search in PATH */
 	head = link_path();
-	while (head != NULL)
+	tmp = head;
+	while (tmp != NULL)
 	{
-		path = _strdup(head->value);
+		path = _strdup(tmp->value);
 
 		if (path[_strlen(path) - 1] != '/')
 			_strcat(path, "/");
@@ -32,15 +33,15 @@ int search_path(char **pathname)
 
 		if (stat(path, &buff) == 0)
 		{
+			free_list(head);
 			*pathname = path;
 			return (1);
 		}
 
-		head = head->next;
+		tmp = tmp->next;
+		free(path);
 	}
 
 	free_list(head);
-	free(path);
-	free(*pathname);
 	return (-1);
 }
