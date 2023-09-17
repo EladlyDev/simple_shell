@@ -51,3 +51,24 @@ char *_strtok(char *str, char *delim)
 
 	return (token);
 }
+
+/**
+ * _strncpy - This function copies a string,
+ * it works exactly like strncpy function
+ * @dest: the destination to copy to
+ * @src: the source string
+ * @n: the bytes number
+ *
+ * Return: pointer to the copied string
+ */
+
+
+char *_strncpy(char *dest, char *src, int n)
+{
+	int i;
+
+	for (i = 0; i < n; i++)
+		dest[i] = src[i];
+
+	return (dest);
+}

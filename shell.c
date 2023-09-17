@@ -10,44 +10,84 @@
 int main(int __attribute__((unused)) argc, char __attribute__((unused)) **argv,
 		 char **env)
 {
-	char **av, *buff = NULL, *path, *piece;
-	int i, in_len;
-	int prompCount = 1;
-	size_t n;
+	char *buff, ***commands, **av, **sub;
+	size_t n = 0, ac, promptNo = 0, nofcommands;
+	int i, atty = -1, stat = 0;
 
 	while (1)
 	{
-		if (isatty(STDIN_FILENO) == 1)
-			write(STDOUT_FILENO, "$ ", 2);
-/* read input and put it in av */
-		if (getline(&buff, &n, stdin) == -1)
-		{   write(STDOUT_FILENO, "\n", 1);
-			return (0);
-		}
-/* get the length of the input */
-		piece = _strtok(buff, " \n");
-		in_len = 0;
-		while (piece)
-		{   in_len++;
-			piece = _strtok(NULL, " \n");
-		}
-/* fill av */
-		av = malloc(sizeof(av) * (in_len + 1));
-		if (in_len > 0)
-		{   piece = _strtok(buff, " \n");
-			for (i = 0; piece; i++)
-			{   av[i] = piece;
-				piece = _strtok(NULL, " \n");
-			}
-			av[i] = NULL;
-			path = av[0];
+		buff = NULL, av = sub = NULL, commands = NULL, promptNo++;
 
-			if (execute(path, av, env) == -1)
-				error(argv[0], prompCount, path, "exec");
+		if (isatty(STDIN_FILENO) == 1)
+		{atty = 1;
+			write(STDOUT_FILENO, "$ ", 2);
 		}
-		if (isatty(STDIN_FILENO) != 1)
+		/* getting the input and puting it in buff */
+		stat = getline(&buff, &n, stdin);
+		if (stat == -1)
+		{
+			if (atty == 1)
+				write(STDOUT_FILENO, "\n", 1);
 			break;
-		prompCount++;
+		}
+		/* getting the number of commands seperated by newline */
+		nofcommands = noftokens(buff, "\n");
+		if (nofcommands < 1)
+			continue;
+		else if (nofcommands == 1)
+		{   /* getting the number of arguments */
+			ac = noftokens(buff, " \n");
+			if (ac < 1)
+				continue;
+			/* allocating memory for the tokens */
+			av = malloc(sizeof(av) * (ac + 1));
+			/* filling the data */
+			if (getokens(buff, av, " \n") == -1)
+			{
+				free(av);
+				continue;
+			}
+		}
+		else	/* if there are more than 1 command */
+		{   /* allocating memory for commands */
+			commands = malloc(sizeof(*commands) * nofcommands);
+			if (!commands)
+				continue;
+			/* seperate commands */
+			if (getokens(buff, sub, "\n") == -1)
+			{
+				free(commands);
+				continue;
+			}
+			/* filling the data */
+			i = 0;
+			while (nofcommands)
+			{   getokens(sub[i], commands[i], " \n");
+				i++, nofcommands--;
+			}
+		}
+		/* the executeion */
+		i = 0;
+		if (commands)
+		{
+			while (commands[i])
+			{
+				if (execute(commands[i][0], commands[i], env) == -1)
+				{
+					error(argv[0], promptNo, commands[i][0], "exec");
+					return (127);
+				}
+				i++;
+			}
+		}
+		if (av)
+		{
+			if (execute(av[0], av, env) == -1)
+			{
+				error(argv[0], promptNo, av[0], "exec");
+				return (127);
+			}
+		}
 	}
 	return (0);
 }

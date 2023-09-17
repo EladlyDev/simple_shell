@@ -43,21 +43,29 @@ char *itos(unsigned long n)
  **/
 char *_getenv(char *var)
 {
-	char *piece;
+	char *piece, *envdup;
 	int i;
 
 	if (!*var)
 		return (NULL);
 
+
 	for (i = 0; environ[i]; i++)
 	{
-		piece = _strtok(environ[i], "=");
+		envdup = _strdup(environ[i]);
+		if (!envdup)
+			return (NULL);
+		piece = strtok(envdup, "=");
 		while (piece)
 		{
 			if (_strcmp(piece, var) == 0)
+			{
+				free(envdup);
 				return (environ[i]);
-			piece = _strtok(NULL, "=");
+			}
+			piece = strtok(NULL, "=");
 		}
+		free(envdup);
 	}
 
 	return (environ[i]);
@@ -70,21 +78,28 @@ char *_getenv(char *var)
  **/
 node_t *link_path(void)
 {
-	char *path, *piece;
+	char *path, *pathdup, *piece;
 	node_t *head = NULL;
 
 	path = _getenv("PATH");
 	if (!path)
 		return (NULL);
 
-	piece = _strtok(path, ":");
+	pathdup = _strdup(path);
+	if (!pathdup)
+		return (NULL);
+	piece = strtok(pathdup, ":=");
 	while (piece)
 	{
 		if (new_node(&head, piece) == NULL)
+		{
+			free(pathdup);
 			return (NULL);
-		piece = _strtok(NULL, ":");
+		}
+		piece = strtok(NULL, ":");
 	}
 
+	free(pathdup);
 	return (head);
 }
 
@@ -102,8 +117,7 @@ node_t *new_node(node_t **head, char *value)
 	new_node = malloc(sizeof(node_t));
 	if (!new_node)
 		return (NULL);
-	new_node->value = value;
-
+	new_node->value = _strdup(value);
 	if (start == NULL)
 	{
 		new_node->next = start;

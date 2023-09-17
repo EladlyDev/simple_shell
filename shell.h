@@ -28,6 +28,7 @@ typedef struct node_s
 /* Prototypes */
 int execute(char *pathname, char **av, char **env);
 int search_path(char **pathname);
+int handle_args(char *buff, char **av, char ***commands);
 
 /* 0-string.c */
 int _strlen(char *s);
@@ -38,6 +39,7 @@ char *_strcat(char *dest, char *src);
 
 /* 1-string.c */
 char *_strtok(char *str, char *delim);
+char *_strncpy(char *dest, char *src, int n);
 
 /* 0-utils.c */
 char *itos(unsigned long n);
@@ -48,5 +50,8 @@ void free_list(node_t *head);
 
 /* 1-utils.c */
 void error(char *mav, int count, char *cav, char *src);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+int getokens(char *buff, char **dest, char *delim);
+int noftokens(char *buff, char *delim);
 
 #endif /* _SHELL_H */

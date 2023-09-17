@@ -18,14 +18,20 @@ int execute(char *pathname, char **av, char **env)
 		return (-1);
 
 	path = _strdup(pathname);
-	if (search_path(&path) == -1)
+	if (!path)
 		return (-1);
+	if (search_path(&path) == -1)
+	{
+		free(path);
+		return (-1);
+	}
 
 	pid = fork();
 	if (pid == 0)
-		execve(path, av, env);
+		if (execve(path, av, env) == -1)
+			return (-1);
 
-	wait(NULL);
 	free(path);
+	wait(NULL);
 	return (pid);
 }

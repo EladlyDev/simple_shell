@@ -7,7 +7,10 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 
 ## TODO:
 
-- [ ] Fix: non-existed command longer than 2 char.
+- [ ] No memory leaks
+- [x] Add the ability to insert multilines commands using echo
+- [x] Fix the issue with the error mimicing
+- [-] Fix: non-existed command longer than 2 char.
 - ~~[ ] Fix: ctl+c prompt again, and exit in case ./shell | "ls"~~
 - [x] Fix: ctl+d exits, and fix "getline: Success"
 - [x] Fix: the passed arguments: $ echo arg1 arg2
@@ -22,7 +25,7 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 - [ ] Handle arguments for the built-in exit #8
 - [ ] Implement setenv #9
 - [ ] Implement unsentenv #9
-- [ ] Implement the builtin command cd #10
+- [-] Implement the builtin command cd #10
 - [ ] Handle the command separator ; #11
 - [ ] Handle the && and || shell logical operators #12
 - [ ] Implement the alias builtin command #13

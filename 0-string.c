@@ -39,7 +39,7 @@ char *_strdup(char *str)
 	{
 		ptc[i] = str[i];
 	}
-	ptc[i + 1] = '\0';
+	ptc[i] = '\0';
 
 	return (ptc);
 }
@@ -106,6 +106,6 @@ char *_strcat(char *dest, char *src)
 	{
 		dest[dest_len + i] = src[i];
 	}
-	dest[dest_len + 1 + src_len] = '\0';
+	dest[dest_len + src_len] = '\0';
 	return (dest);
 }
