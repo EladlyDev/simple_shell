@@ -1,4 +1,4 @@
-#include "stdlib.h"
+#include <stdlib.h>
 
 /**
  * _strlen - This function returns the length of a string.
@@ -101,7 +101,6 @@ char *_strcat(char *dest, char *src)
 	int dest_len = _strlen(dest);
 	int src_len = _strlen(src);
 	int i;
-
 	for (i = 0; i < src_len; i++)
 	{
 		dest[dest_len + i] = src[i];

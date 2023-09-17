@@ -24,11 +24,25 @@ typedef struct node_s
 	char *value;
 	struct node_s *next;
 } node_t;
-
+/**
+ * shellstate - struct to save the shell state to help print the error message
+ * @should_exit: flag used when exit command is entered
+ * @exit_status: used to determine the exit status from 0-255
+ */
+typedef struct 
+{
+	int should_exit;
+	int exit_status;
+} ShellState;
 /* Prototypes */
 int execute(char *pathname, char **av, char **env);
 int search_path(char **pathname);
 int handle_args(char *buff, char **av, char ***commands);
+void check_exit(char *av, ShellState *state);
+void check_dollar(char *av, ShellState *state);
+void replace_dollar(char *av, ShellState *state);
+void print_env();
+void int_to_str(int n, char *buffer);
 
 /* 0-string.c */
 int _strlen(char *s);
