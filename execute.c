@@ -29,7 +29,7 @@ int execute(char *pathname, char **av, char **env)
 	pid = fork();
 	if (pid == 0)
 		if (execve(path, av, env) == -1)
-			return (-1);
+			_exit(EXIT_FAILURE);
 
 	free(path);
 	wait(NULL);
