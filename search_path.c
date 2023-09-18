@@ -1,16 +1,9 @@
 #include "shell.h"
 
-/**
- * search_path - takes a pathname, and if it is a path it checks if it exists
- * if it's a name it try to find it in PATH
- * @pathname: a pointer to the pathname.
- *
- * Return: 1 if it exists, -1 if not.
- **/
 int search_path(char **pathname)
 {
         node_t *head = NULL, *tmp;
-        char *path;
+        char *path = NULL; // Initialize path to NULL
         struct stat buff;
 
         if (!*pathname || !**pathname)
@@ -45,9 +38,10 @@ int search_path(char **pathname)
 
                 free(path);
                 tmp = tmp->next;
-                path = NULL;
+                path = NULL; // Reset path to NULL after freeing it
         }
 
         free_list(head);
         return (-1);
 }
+

@@ -9,29 +9,40 @@
  **/
 void error(char *mav, int count, char *cav, char *src)
 {
-	char *countStr, *message;
+        char *countStr, *message;
 
-	countStr = itos(count);
+        countStr = itos(count);
 
-	message = _strdup(mav);
-	_strcat(message, ": ");
-	_strcat(message, countStr);
-	_strcat(message, ": ");
-	_strcat(message, cav);
+        // Calculate the length of the message
+        int message_len = _strlen(mav) + _strlen(countStr) + _strlen(cav) + 10;
 
-	if (_strcmp(src, "exec") == 0)
-	{
-		write(STDERR_FILENO, message, _strlen(message));
-		write(STDERR_FILENO, ": not found\n", 12);
-	}
-	else
-		perror(message);
-	free(message);
+        // Allocate enough space for the message
+        message = malloc(message_len);
+        if (message == NULL) {
+            // Handle error
+            return;
+        }
 
-	free(countStr);
-	message = NULL;
-	countStr = NULL;
+        // Build the message
+        _strcpy(message, mav);
+        _strcat(message, ": ");
+        _strcat(message, countStr);
+        _strcat(message, ": ");
+        _strcat(message, cav);
+
+        if (_strcmp(src, "exec") == 0)
+        {
+                write(STDERR_FILENO, message, _strlen(message));
+                write(STDERR_FILENO, ": not found\n", 12);
+        }
+        else
+                perror(message);
+
+        // Free the allocated memory
+        free(message);
+        free(countStr);
 }
+
 
 
 /**
@@ -45,37 +56,44 @@ void error(char *mav, int count, char *cav, char *src)
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	void *ptv; /* a void pointer */
+        void *ptv; /* a void pointer */
+        char *char_ptv; /* a char pointer for initializing */
+        unsigned int i;
 
-	/* Edge cases. */
-	if (new_size == old_size)
-		return (ptr);
-	if (ptr == NULL)
-	{
-		ptv = malloc(old_size + new_size);
-		if (!ptv)
-			return (NULL);
-		return (ptv);
-	}
-	if (new_size == 0 && ptr != NULL)
-	{
-		free(ptr);
-		return (NULL);
-	}
+        /* Edge cases. */
+        if (new_size == old_size)
+                return (ptr);
+        if (ptr == NULL)
+        {
+                ptv = malloc(old_size + new_size);
+                if (!ptv)
+                        return (NULL);
+                return (ptv);
+        }
+        if (new_size == 0 && ptr != NULL)
+        {
+                free(ptr);
+                return (NULL);
+        }
 
+        /* Allocate memory. */
+        ptv = malloc(new_size);
+        if (ptv == NULL)
+                return (NULL);
 
-	/* Allocate memory. */
-	ptv = malloc(new_size);
-	if (ptv == NULL)
-		return (NULL);
+        /* Initialize ptv to zero */
+        char_ptv = (char *)ptv;
+        for(i = 0; i < new_size; i++)
+            char_ptv[i] = 0;
 
-	/* Filling the data. */
-	new_size = new_size > old_size ? old_size : new_size;
-	_strncpy(ptv, ptr, new_size);
+        /* Filling the data. */
+        new_size = new_size > old_size ? old_size : new_size;
+        _strncpy(ptv, ptr, new_size);
 
-	free(ptr);
-	return (ptv);
+        free(ptr);
+        return (ptv);
 }
+
 
 
 /**
@@ -88,28 +106,30 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  **/
 int getokens(char *buff, char **dest, char *delim)
 {
-	char *piece, *buffdup;
-	int i = 0;
+        char *piece, *buffdup;
+        int i = 0;
 
-	if (!buff || !dest || !delim)
-		return (-1);
+        if (!buff || !dest || !delim)
+                return (-1);
 
-	/* duplicating the buffer */
-	buffdup = _strdup(buff);
-	if (!buffdup)
-		return (-1);
-	/* getting each piece and filling the data */
-	piece = strtok(buffdup, delim);
-	while (piece)
-	{
-		dest[i] = piece;
-		piece = strtok(NULL, delim);
-		i++;
-	}
-	dest[i] = NULL;
-
-	return (0);
+        /* duplicating the buffer */
+        buffdup = _strdup(buff);
+        if (!buffdup)
+                return (-1);
+        /* getting each piece and filling the data */
+        piece = strtok(buffdup, delim);
+        while (piece)
+        {
+                dest[i] = _strdup(piece); // Duplicate each piece
+                piece = strtok(NULL, delim);
+                i++;
+        }
+        dest[i] = NULL;
+  
+        free(buffdup); // Free the duplicated buffer
+        return (0);
 }
+
 
 
 /**
@@ -139,5 +159,6 @@ int noftokens(char *buff, char *delim)
 		noftokens++;
 		piece = strtok(NULL, delim);
 	}
+	free(buffdup);
 	return (noftokens);
 }
