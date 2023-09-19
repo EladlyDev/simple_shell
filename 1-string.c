@@ -80,44 +80,43 @@ char *_strncpy(char *dest, char *src, int n)
 
 void int_to_str(int n, char *buffer)
 {
-    int i = 0, j = 0, temp;
-    char sign = '+';
+	int i = 0, j = 0, temp;
+	char sign = '+';
 
-    if (n == 0) // handle zero case
-    {
-        buffer[i++] = '0';
-        buffer[i] = '\0';
-        return;
-    }
+	if (n == 0)
+	{
+		buffer[i++] = '0';
+		buffer[i] = '\0';
+		return;
+	}
 
-    if (n < 0) // handle negative case
-    {
-        sign = '-';
-        n = -n;
-    }
+	if (n < 0)
+	{
+		sign = '-';
+		n = -n;
+	}
 
-    while (n > 0) // extract each digit in reverse order
-    {
-        temp = n % 10;
-        buffer[i++] = temp + '0';
-        n /= 10;
-    }
+	while (n > 0)
+	{
+		temp = n % 10;
+		buffer[i++] = temp + '0';
+		n /= 10;
+	}
 
-    if (sign == '-') // add minus sign if needed
-    {
-        buffer[i++] = sign;
-    }
+	if (sign == '-')
+	{
+		buffer[i++] = sign;
+	}
 
-    buffer[i] = '\0'; // terminate the string
+	buffer[i] = '\0';
 
-    i--; // move to the last character
-
-    while (j < i) // reverse the string
-    {
-        temp = buffer[j];
-        buffer[j] = buffer[i];
-        buffer[i] = temp;
-        j++;
-        i--;
-    }
+	i--;
+	while (j < i)
+	{
+		temp = buffer[j];
+		buffer[j] = buffer[i];
+		buffer[i] = temp;
+		j++;
+		i--;
+	}
 }
