@@ -7,7 +7,7 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 
 ## TODO:
 
-- [x ] No memory leaks
+- [x] No memory leaks
 - [x] Add the ability to insert multilines commands using echo
 - [x] Fix the issue with the error mimicing
 - [x] Fix: non-existed command longer than 2 char.
@@ -23,7 +23,7 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 - [x] Implement the getline function #6
 - [x] Implement the strtok function #7
 - [x] Handle arguments for the built-in exit #8
-- [- ] Implement setenv #9
+- [-] Implement setenv #9
 - [-] Implement unsentenv #9
 - [-] Implement the builtin command cd #10
 - [ ] Handle the command separator ; #11
