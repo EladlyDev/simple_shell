@@ -10,7 +10,7 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 - [ ] No memory leaks
 - [x] Add the ability to insert multilines commands using echo
 - [x] Fix the issue with the error mimicing
-- [-] Fix: non-existed command longer than 2 char.
+- [x] Fix: non-existed command longer than 2 char.
 - ~~[ ] Fix: ctl+c prompt again, and exit in case ./shell | "ls"~~
 - [x] Fix: ctl+d exits, and fix "getline: Success"
 - [x] Fix: the passed arguments: $ echo arg1 arg2
@@ -18,11 +18,11 @@ back to the screen, files, etc, [more...](https://github.com/rcgsheffield/linux-
 - [x] Add: create a function to free the linked list.
 - [x] Fix: _getenv();
 - [x] Add: mimic the errors in sh
-- [ ] Implement the exit built-in, that exits the shell
-- [ ] Implement the env built-in, that prints the current environment
-- [ ] Implement the getline function #6
+- [x] Implement the exit built-in, that exits the shell
+- [x] Implement the env built-in, that prints the current environment
+- [x] Implement the getline function #6
 - [x] Implement the strtok function #7
-- [ ] Handle arguments for the built-in exit #8
+- [x] Handle arguments for the built-in exit #8
 - [ ] Implement setenv #9
 - [ ] Implement unsentenv #9
 - [-] Implement the builtin command cd #10
