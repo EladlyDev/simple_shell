@@ -12,12 +12,15 @@
 int execute_commands(char ***commands, char **env, char **argv,
 					 size_t promptNo)
 {
-	int i = 0;
+	int i = 0, status;
 
 	while (commands[i])
 	{
-		if (execute(commands[i][0], commands[i], env) == -1)
+		status = execute(commands[i][0], commands[i], env);
+		if (status == -1)
 			return (error(argv, promptNo, commands[i], NULL, "exec"));
+		else if (status == 512)
+			return (2);
 		i++;
 	}
 
@@ -35,10 +38,15 @@ int execute_commands(char ***commands, char **env, char **argv,
 int execute_single_command(char **av, char **env, char **argv,
 							size_t promptNo)
 {
-	if (execute(av[0], av, env) == -1)
+	int status;
+
+	status = execute(av[0], av, env);
+	if (status == -1)
 	{
 		return (error(argv, promptNo, av, NULL, "exec"));
 	}
+	else if (status == 512)
+		return (2);
 	return (0);
 }
 

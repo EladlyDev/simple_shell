@@ -16,7 +16,7 @@ int main(int __attribute__((unused)) argc, char __attribute__((unused)) **argv,
 	int atty = -1, stat, noft;
 	ShellState state;
 
-	state.should_exit = state.exit_status = n = stat = noft = 0;
+	state.should_exit = state.exit_status = n = stat = noft = promptNo = 0;
 
 	while (1)
 	{   buff = NULL, n = 0, av = NULL, commands = NULL;

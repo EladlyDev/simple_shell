@@ -11,7 +11,7 @@
  **/
 int execute(char *pathname, char **av, char **env)
 {
-	int pid;
+	int pid, status;
 	char *path;
 
 	if (!*pathname)
@@ -32,6 +32,6 @@ int execute(char *pathname, char **av, char **env)
 			_exit(EXIT_FAILURE);
 
 	free(path);
-	wait(NULL);
-	return (pid);
+	wait(&status);
+	return (status);
 }

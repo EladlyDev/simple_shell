@@ -81,8 +81,6 @@ int check_exit(char *av, ShellState *state)
 			else if (status > 255)
 				state->exit_status = status % 256;
 		}
-		else
-			state->exit_status = 0;
 	}
 	free(avdup);
 	if (state->should_exit)
