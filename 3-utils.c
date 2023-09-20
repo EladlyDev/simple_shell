@@ -65,3 +65,47 @@ void exec_err(char **mav, char *countStr, char **cav)
 	free(message);
 	free(countStr);
 }
+
+
+/**
+ * freecav - frees command argv
+ * @cav: the list
+ * @frombuff: it'll only free if this is 1
+ **/
+void freecav(char **cav, int frombuff)
+{
+	int i = 0;
+
+	if (frombuff == 1)
+	{
+		i = 0;
+		while (cav[i])
+		{
+			free(cav[i]);
+			i++;
+		}
+		free(cav);
+	}
+}
+
+/**
+ * init - tbh it's just for making less than 40 lines in the main function
+ * @buff: the buffer
+ * @atty: the atty status
+ * @n: the getline size
+ *
+ * Return: the return value of getline function.
+ **/
+int init(char **buff, int *atty, size_t n)
+{
+	int stat = 0;
+
+	if (isatty(STDIN_FILENO) == 1)
+	{   *atty = 1;
+		write(STDOUT_FILENO, "$ ", 2);
+	}
+
+	stat = getline(buff, &n, stdin);
+
+	return (stat);
+}

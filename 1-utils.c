@@ -13,24 +13,31 @@
 int error(char **mav, int count, char **cav, char *buff, char *src)
 {
 	char *countStr;
+	int frombuff = -1;
 
 	countStr = itos(count);
 	if (!cav && buff)
+	{
 		cav = prep_command(buff);
+		frombuff = 1;
+	}
 
 	if (_strcmp(src, "exec") == 0)
 	{
 		exec_err(mav, countStr, cav);
+		freecav(cav, frombuff);
 		return (127);
 	}
 	else if (_strcmp(src, "exit") == 0)
 	{
 		exit_err(mav, countStr, cav);
+		freecav(cav, frombuff);
 		return (2);
 	}
 	else
 		perror(*mav);
 
+	freecav(cav, frombuff);
 	free(countStr);
 	return (2);
 }

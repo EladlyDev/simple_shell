@@ -44,6 +44,7 @@ int print_env(char *buff)
  * check_exit - function checks if exit is typed
  * @state:the struct containing the exit state
  * @av: list of args.
+ *
  * Return: -1 on failure, nothing on succeed.
  */
 int check_exit(char *av, ShellState *state)
@@ -83,8 +84,6 @@ int check_exit(char *av, ShellState *state)
 		}
 	}
 	free(avdup);
-	if (state->should_exit)
-		exit(state->exit_status);
 	return (0);
 }
 

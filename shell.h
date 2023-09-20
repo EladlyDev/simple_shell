@@ -76,7 +76,8 @@ char ***prep_commands(char *buff, int nofcommands);
 /* 3-utils.c */
 void exit_err(char **mav, char *countStr, char **cav);
 void exec_err(char **mav, char *countStr, char **cav);
-
+void freecav(char **cav, int frombuff);
+int init(char **buff, int *atty, size_t n);
 /* exit_env */
 int print_env(char *buff);
 int check_exit(char *av, ShellState *state);
